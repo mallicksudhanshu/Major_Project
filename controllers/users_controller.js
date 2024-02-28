@@ -1,3 +1,4 @@
+const User= require('../models/users');
 module.exports.profile = function(req, res){
     return res.render('user_profile',{
         title:'User Page',
@@ -17,3 +18,10 @@ module.exports.signIn=function(req,res){
     })
 }
 
+module.exports.create=function(req,res){
+    // if (req.body)
+}
+
+module.exports.createSession=function(req,res){
+
+}
