@@ -39,6 +39,27 @@ module.exports.create = async function(req, res) {
 };
 
 
-module.exports.createSession=function(req,res){
+module.exports.createSession = async function(req, res) {
+    try {
+        // Find the user
+        const user = await User.findOne({ email: req.body.email });
 
-}
+        // Handle user found
+        if (user) {
+            // Handle password mismatch
+            if (user.password !== req.body.password) {
+                return res.redirect('back');
+            }
+
+            // Handle session creation
+            res.cookie('user_id', user.id);
+            return res.redirect('/users/profile');
+        } else {
+            // Handle user not found
+            return res.redirect('back');
+        }
+    } catch (err) {
+        console.error('Error in user sign-in:', err);
+        return res.status(500).send('Internal Server Error');
+    }
+};
