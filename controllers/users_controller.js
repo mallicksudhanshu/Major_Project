@@ -1,10 +1,32 @@
 const User= require('../models/users');
-module.exports.profile = function(req, res){
-    return res.render('user_profile',{
-        title:'User Page',
-        user_message:'Welcome to User Page'
-    });
-}
+
+module.exports.profile = async function(req, res) {
+    try {
+        // Check if the user is authenticated
+        if (req.cookies.user_id) {
+            // Find the user details using await and a promise
+            const user = await User.findById(req.cookies.user_id);
+
+            // User details found
+            if (user) {
+                return res.render('user_profile', {
+                    title: 'User Profile',
+                    user: user
+                });
+            }
+
+            // User details not found
+            return res.redirect('/users/signIn');
+        } else {
+            // User unable to authenticate
+            return res.redirect('/users/signIn');
+        }
+    } catch (error) {
+        console.error(error);
+        return res.redirect('/users/signIn');
+    }
+};
+
 
 module.exports.signUp=function(req,res){
     return res.render('user_sign_up',{
@@ -63,3 +85,10 @@ module.exports.createSession = async function(req, res) {
         return res.status(500).send('Internal Server Error');
     }
 };
+
+module.exports.deleteSession=function(req,res){
+    //clearing stored cookies to signOut
+    res.cookie('user_id','',{expires:new Date(0)});
+    //redirect to sinIn page after clearing cookies
+    return res.redirect('/users/signIn');
+}

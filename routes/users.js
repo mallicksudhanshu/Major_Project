@@ -12,6 +12,8 @@ router.get('/SignIn',usersConrtoller.signIn);
 
 router.post('/create',usersConrtoller.create);
 router.post('/create-session',usersConrtoller.createSession);
+
+router.get('/delete-session',usersConrtoller.deleteSession);
 module.exports = router;
 
 
