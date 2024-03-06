@@ -1,4 +1,6 @@
+// const {Session} = require('inspector');
 const User= require('../models/users');
+
 module.exports.profile = function(req, res){
     return res.render('user_profile',{
         title:'User Page',
@@ -40,5 +42,5 @@ module.exports.create = async function(req, res) {
 
 
 module.exports.createSession=function(req,res){
-
+    return res.redirect('/');
 }
