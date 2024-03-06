@@ -13,7 +13,7 @@ router.get('/SignIn',usersConrtoller.signIn);
 
 router.post('/create',usersConrtoller.create);
 
-
+// authenticating user after sigining in using passport
 router.post('/create-session',passport.authenticate(
     'local',
     {failureRedirect:'/users/SignIn'},

@@ -28,7 +28,7 @@ app.set('layout extractScripts',true);
 app.set('view engine','ejs');
 app.set('views','./views');
 
-
+// session created for cookies
 app.use(session({
     name:'codeial',
     secret: 'blahsomething',
