@@ -10,6 +10,7 @@ const db=require('./config/mongoose.js');
 const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy.js');
+const MongoStore=require('connect-mongo');
 
 app.use(express.urlencoded({extended:true}));
 
@@ -36,11 +37,26 @@ app.use(session({
     resave: false,
     cookie:{
         maxAge:(1000*60*100)
+    },
+    // mongo store is used to store the session cookie in the db 
+    store: MongoStore.create({
+        mongoUrl: 'mongodb://localhost/codeial_development',
+        autoRemove:'disabled'
+    },
+    function(err){
+        console.log(err || 'connect-mongodb setup ok')
     }
+    ),
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+
+
+app.use(passport.setAuthenticatedUser);
 
 
 // use express router 
