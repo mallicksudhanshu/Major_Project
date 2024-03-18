@@ -1,0 +1,35 @@
+#header-style {
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Items are positioned with space between them */
+    align-items: center; /* Center items vertically */
+    background-color: #005b96;/* Dark background color */
+    color: white; /* Text color */
+    padding: 35px 20px; /* Padding inside the header */
+    font-size: 30px;
+}
+
+#header-style h1 {
+    margin: 0; /* Remove default margin */
+}
+
+#header-style ul {
+    list-style-type: none; /* Remove bullets from list */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    display: flex; /* Use flexbox for list */
+}
+
+#header-style li {
+    margin-left: 20px; /* Spacing between list items */
+}
+
+#header-style a {
+    color: white; /* Text color for links */
+    text-decoration: none; /* Remove underline from links */
+    font-size: 30px;
+}
+
+#header-style a:hover {
+    // text-decoration: underline; /* Underline links on hover */
+    color: aqua;
+}
