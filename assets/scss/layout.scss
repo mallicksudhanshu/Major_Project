@@ -1,7 +1,11 @@
-body{
+body {
     margin: 0;
-    // text-align: center; 
-    #layout-main{
-        height: 100vh;
-    }
-}
+    min-height: 100vh; /* Set minimum height of body to fill viewport */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #layout-main {
+    flex: 1; /* Grow to fill remaining vertical space */
+  }
+  
