@@ -3,10 +3,9 @@ const router = express.Router();
 const passport=require('passport');
 
 const usersConrtoller = require('../controllers/users_controller');
-const photoesController=require('../controllers/photoes_controller')
 
 router.get('/profile',passport.checkAuthentication, usersConrtoller.profile);
-router.get('/photoes',photoesController.photoes);
+
 
 router.get('/SignUp',usersConrtoller.signUp);
 router.get('/SignIn',usersConrtoller.signIn);
