@@ -8,7 +8,7 @@
         <ul>
             <% posts.forEach(function(post) { %>
                 <li><%= post.content %></li>
-                <li>Posted By:<%= post.user.name %></li><br>
+                <small id="space-bottom">Posted By:<%= post.user.name %></small>
             <% }); %>
         </ul>
     <% } else { %>
