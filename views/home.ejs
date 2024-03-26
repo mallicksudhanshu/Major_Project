@@ -1,7 +1,6 @@
 <h1>
     <%= message %>
 </h1>
-
 <section id="feed-posts">
     <h4>Posts</h4>
     <% if (posts.length > 0) { %>
@@ -9,13 +8,26 @@
             <% posts.forEach(function(post) { %>
                 <li><%= post.content %></li>
                 <small id="space-bottom">Posted By:<%= post.user.name %></small>
+                <% if (post.comments.length > 0) { %>
+                    <ul>
+                        <% post.comments.forEach(function(comment) { %>
+                            <li><%= comment.content %></li>
+                            <small>Commented By:<%= comment.user.name %></small>
+                        <% }); %>
+                    </ul>
+                <% } %>
+                    <form action="/comments/create" method="post">
+                        <textarea name="content" cols="30" rows="3" placeholder="Add Comments..."></textarea>
+                        <input type="hidden" name="postId" value="<%= post._id %>">
+                        <input type="submit" value="Add">
+                    </form>
             <% }); %>
         </ul>
     <% } else { %>
         <p>No posts available.</p>
     <% } %>
-    <form action="/posts/create" id="new-posts-form" method="POST">
-        <textarea name="content" cols="30" rows="3" placeholder="Type Here...."></textarea>
-        <input type="submit" value="Post">
-    </form>
+        <form action="/posts/create" id="new-posts-form" method="post">
+            <textarea name="content" cols="30" rows="3" placeholder="Type Here...."></textarea>
+            <input type="submit" value="Post">
+        </form>
 </section>

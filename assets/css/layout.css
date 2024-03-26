@@ -3,7 +3,8 @@ body {
   min-height: 100vh;
   /* Set minimum height of body to fill viewport */
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  font-family: Arial, sans-serif; }
 
 #layout-main {
   flex: 1;

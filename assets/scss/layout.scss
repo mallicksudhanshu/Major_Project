@@ -3,14 +3,16 @@ body {
     min-height: 100vh; /* Set minimum height of body to fill viewport */
     display: flex;
     flex-direction: column;
-  }
-  
-  #layout-main {
+    font-family: Arial, sans-serif;
+}
+
+#layout-main {
     flex: 1; /* Grow to fill remaining vertical space */
-  }
- 
-  #space-bottom {
+}
+
+#space-bottom {
     display: block;
     margin-bottom: 10px; /* Adjust as needed to add space between list items */
-  }
-  
+}
+
+
