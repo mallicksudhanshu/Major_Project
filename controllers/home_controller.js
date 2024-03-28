@@ -7,7 +7,6 @@ module.exports.home = async function(req, res) {
             path:'comments',
             populate:{
                 path:'user',
-                model:'User'
             }
         }).exec();
         // console.log(posts);

@@ -3,15 +3,25 @@ const Post=require('../models/post');
 
 module.exports.create=async function(req,res){
     try{
+        // find the post
+        const post= await Post.findById(req.body.postId);
+        if(!post){
+            console.error('Post not found');
+            return res.redirect('back');
+        }
+        // creaate the comment
         const comment=await Comment.create({
             content: req.body.content,
             user: req.user._id,
-            post:req.body.postId
+            post: req.body.postId
         });
+        //  push the comments refrence to the post
+        post.comments.push(comment._id)
+        await post.save();
 
-        await Post.findByIdAndUpdate(req.body.postId,{ $push: { comments:comment._id } })
-        console.log('Comment created sucessfully:',comment);
-        return res.redirect('back');
+        console.log('Comment created sucessfully',comment);
+        return res.redirect('/');
+
     }catch(err){
         console.error('Error in creating comment:', err);
         return res.redirect('back');
