@@ -10,7 +10,7 @@ body {
   flex: 1;
   /* Grow to fill remaining vertical space */ }
 
-#space-bottom {
+.space-bottom {
   display: block;
   margin-bottom: 10px;
   /* Adjust as needed to add space between list items */ }

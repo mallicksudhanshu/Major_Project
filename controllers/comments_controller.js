@@ -27,3 +27,33 @@ module.exports.create=async function(req,res){
         return res.redirect('back');
     }
 }
+
+module.exports.destroy = async function(req,res){
+    try {
+
+        const comment= await Comment.findById(req.params.id);
+        if(!comment){
+            console.log("No comment available by this user");
+        }else{
+            // .id means converting the object id into string
+            if(comment.user.toString()==req.user.id){
+
+                let postId = comment.post
+
+                await comment.deleteOne()
+                console.log('Comment deleted Sucessfully');
+
+                await Post.findByIdAndUpdate(postId,{ $pull:{comments:req.params.id}});
+                console.log('Comment refrence from posts deleted sucessfully');
+                return res.redirect('/');
+
+            }else {
+                console.log("You are not authorized to delete this comment");
+                return res.redirect('back');
+            }
+        }
+        
+    } catch (error) {
+        
+    }
+}

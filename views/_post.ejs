@@ -1,0 +1,33 @@
+<!-- Check if there are any posts available -->
+<% if (posts.length > 0) { %>
+    <ul>
+        <!-- Loop through each post -->
+        <% posts.forEach(function(post) { %>
+            <li><%= post.content %>
+                <small class="space-bottom">
+                    Posted By:<%= post.user.name %>
+                    <p>
+                        <!-- user must be logged in and user able to delete their post -->
+                        <% if ( locals.user && locals.user.id == post.user.id) { %>
+                            <form action="/posts/destroy/<%= post.id %>" method="get">
+                                <button type="submit">Delete</button>
+                            </form>
+                        <% } %>
+                    </p>
+                </small>
+           </li>
+
+           <%- include('_comment', { post: post }) -%>
+
+        <% }); %>
+    </ul>
+<!-- If there are no posts available -->
+<% } else { %>
+    <p>No posts available.</p>
+<% } %>
+
+<!-- Form to create a new post -->
+<form action="/posts/create" id="new-posts-form" method="post">
+    <textarea name="content" cols="30" rows="3" placeholder="Type Here...." required></textarea>
+    <input type="submit" value="Post">
+</form>
