@@ -54,6 +54,7 @@ module.exports.destroy = async function(req,res){
         }
         
     } catch (error) {
-        
+        console.error('Error in deleting the comment:', err);
+        return res.redirect('back');
     }
 }

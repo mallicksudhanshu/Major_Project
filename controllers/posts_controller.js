@@ -38,7 +38,7 @@ module.exports.destroy = async function(req,res){
             }
         }
     }catch (err) {
-        console.error('Error in deleting a post:', err);
+        console.error('Error in deleting the post:', err);
         return res.redirect('back');
     }
 }

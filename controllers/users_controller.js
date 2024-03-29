@@ -1,11 +1,19 @@
 // const {Session} = require('inspector');
 const User = require("../models/users");
 
-module.exports.profile = function (req, res) {
-  return res.render("user_profile", {
-    title: "User Page",
-    user_message: "Welcome to User Page",
-  });
+module.exports.profile = async function (req, res) {
+  try {
+    const user=await User.findById(req.params.id)
+    return res.render("user_profile", {
+      title: "User Page",
+      user_message: "Welcome to User Page",
+      profile_user:user
+    });
+    
+  } catch (error) {
+    console.error(error);
+  }
+  
 };
 
 module.exports.signUp = function (req, res) {

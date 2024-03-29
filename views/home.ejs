@@ -11,3 +11,13 @@
     <%- include('_post', { posts: posts }) -%>
 
 </section>
+
+<section id="user-friends">
+    <h4>Friends</h4>
+    <% all_users.forEach(function(user) { %>
+        <p>
+            <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
+        </p>
+    <% }); %>
+</section>
+
