@@ -67,3 +67,20 @@ module.exports.destroySession = function (req, res) {
     return res.redirect("/");
   });
 };
+
+module.exports.update = async function(req, res) {
+  try {
+      // Check if the authenticated user is authorized to update the user details
+      if (req.user.id !== req.params.id) {
+          return res.status(401).send('Unauthorized update');
+      }
+
+      // Update the user details
+      await User.findByIdAndUpdate(req.params.id, req.body);
+
+      console.log('User details updated successfully');
+      return res.redirect('back');
+  } catch (error) {
+      console.error('Error updating user details:', error);
+  }
+}
