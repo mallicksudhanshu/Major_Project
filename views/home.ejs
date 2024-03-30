@@ -1,23 +1,22 @@
-<!-- This is the main header section -->
-<h1>
-    <%= message %>
-</h1>
+<link rel="stylesheet" href="/css/home.css">
+<div id="home-container">
+    <!-- This section contains the feed posts -->
+    <section id="feed-posts">
+        <!-- Header for the posts section -->
+        <h4>Posts</h4>
+    
+        <%- include('_post', { posts: posts }) -%>
+    
+    </section>
+    
+    <section id="user-friends">
+        <h4>Friends</h4>
+        <% all_users.forEach(function(user) { %>
+            <p>
+                <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
+            </p>
+        <% }); %>
+    </section>
+</div>
 
-<!-- This section contains the feed posts -->
-<section id="feed-posts">
-    <!-- Header for the posts section -->
-    <h4>Posts</h4>
-
-    <%- include('_post', { posts: posts }) -%>
-
-</section>
-
-<section id="user-friends">
-    <h4>Friends</h4>
-    <% all_users.forEach(function(user) { %>
-        <p>
-            <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
-        </p>
-    <% }); %>
-</section>
 
