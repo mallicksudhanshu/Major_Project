@@ -7,7 +7,7 @@ module.exports.create = async function(req, res) {
             content: req.body.content,
             user: req.user._id
         });
-        console.log('Post created successfully:', post);
+        req.flash('success','Post created successfully');
         return res.redirect('back');
     } catch (err) {
         console.error('Error in creating a post:', err);
@@ -20,26 +20,27 @@ module.exports.destroy = async function(req,res){
     try{
         const post = await Post.findById(req.params.id);
         if(!post){
-            console.log("No posts available by this user")
+            req.flash('error','No post found');
+            return res.redirect('back');
         }else{
             // .id means converting the object id into string 
             if(post.user.toString()==req.user.id){
                 await post.deleteOne()
-                console.log("Post deleted successfully");
+                // Delete comments associated with the post
+                await Comment.deleteMany({ post: req.params.id });
+                req.flash('success', 'Post and associated comments deleted successfully');
 
-                 // Delete comments associated with the post
-                 await Comment.deleteMany({ post: req.params.id });
-                 console.log("Comments deleted successfully");
-
-                 return res.redirect('/');
+                return res.redirect('/');
 
             }else {
-                console.log("You are not authorized to delete this post");
+                req.flash('error', 'You are not authorized to delete this post');
+                return res.redirect('back');
             }
         }
     }catch (err) {
         console.error('Error in deleting the post:', err);
+        req.flash('error', 'Error deleting post');
         return res.redirect('back');
     }
 }
-
+ 

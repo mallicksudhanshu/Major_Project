@@ -37,6 +37,7 @@ module.exports.signIn = function (req, res) {
 module.exports.create = async function (req, res) {
   try {
     if (req.body.password != req.body.confirm_password) {
+      req.flash('error','Confirm password must be same');
       return res.redirect("back");
     }
 
@@ -44,12 +45,13 @@ module.exports.create = async function (req, res) {
 
     if (!existingUser) {
       const newUser = await User.create(req.body);
+      req.flash('success','Sucessfully signed in');
       return res.redirect("/users/signIn");
     } else {
       return res.redirect("back");
     }
   } catch (err) {
-    console.error("Error in user creation:", err);
+    req.flash('error', 'Failed to create user. Please try again.');
     return res.status(500).send("Internal Server Error");
   }
 };
@@ -74,15 +76,17 @@ module.exports.update = async function(req, res) {
   try {
       // Check if the authenticated user is authorized to update the user details
       if (req.user.id !== req.params.id) {
-          return res.status(401).send('Unauthorized update');
+        req.flash('error', 'Unauthorized update');
+        return res.status(401).send('Unauthorized update');
       }
 
       // Update the user details
       await User.findByIdAndUpdate(req.params.id, req.body);
 
-      console.log('User details updated successfully');
+      req.flash('success', 'User details updated successfully');
       return res.redirect('back');
   } catch (error) {
-      console.error('Error updating user details:', error);
+      req.flash('error', 'Failed to update user details');
+      return res.redirect('back');
   }
 }

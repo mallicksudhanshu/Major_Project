@@ -6,7 +6,7 @@ module.exports.create=async function(req,res){
         // find the post
         const post= await Post.findById(req.body.postId);
         if(!post){
-            console.error('Post not found');
+            req.flash('error', 'Post not found');
             return res.redirect('back');
         }
         // creaate the comment
@@ -19,11 +19,11 @@ module.exports.create=async function(req,res){
         post.comments.push(comment._id)
         await post.save();
 
-        console.log('Comment created sucessfully',comment);
+        req.flash('success', 'Comment created successfully');
         return res.redirect('/');
 
     }catch(err){
-        console.error('Error in creating comment:', err);
+        req.flash('error', 'Failed to create comment');
         return res.redirect('back');
     }
 }
@@ -41,20 +41,18 @@ module.exports.destroy = async function(req,res){
                 let postId = comment.post
 
                 await comment.deleteOne()
-                console.log('Comment deleted Sucessfully');
-
                 await Post.findByIdAndUpdate(postId,{ $pull:{comments:req.params.id}});
-                console.log('Comment refrence from posts deleted sucessfully');
+                req.flash('success', 'Comment deleted successfully');
                 return res.redirect('/');
 
             }else {
-                console.log("You are not authorized to delete this comment");
+                req.flash('error', 'You are not authorized to delete this comment');
                 return res.redirect('back');
             }
         }
         
     } catch (error) {
-        console.error('Error in deleting the comment:', err);
+        req.flash('error', 'Failed to delete comment');
         return res.redirect('back');
     }
 }
