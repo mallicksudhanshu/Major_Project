@@ -6,7 +6,6 @@ module.exports.profile = async function (req, res) {
     const user=await User.findById(req.params.id)
     return res.render("user_profile", {
       title: "User Page",
-      user_message: "Welcome to User Page",
       profile_user:user
     });
     
